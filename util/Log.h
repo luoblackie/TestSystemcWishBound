@@ -17,6 +17,7 @@ public:
     static void info(const string & msg);
     static void info(const int & msg);
     static void info(const char & msg);
+    static ofstream getSaveFileStream();
 };
 
 

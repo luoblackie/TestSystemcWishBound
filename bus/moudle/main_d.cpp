@@ -10,7 +10,6 @@ using namespace std;
 void main_d::read(sc_uint<8> adr, int &data) {
     Log::info("主设备：读操作开始。。。data = ");
     Log::info(data);
-    Log::info((char)data);
     wait(clk_i.posedge_event());
     m_adr_o = adr;
     m_we_o = false;
@@ -31,7 +30,6 @@ void main_d::read(sc_uint<8> adr, int &data) {
 void main_d::write(sc_uint<8> adr, int data) {
     Log::info("主设备写操作开始...data = ");
     Log::info(data);
-    Log::info((char)data);
     // 等时钟上升沿
     wait(clk_i.posedge_event());
     m_adr_o = adr;
@@ -67,6 +65,13 @@ void main_d::do_test() {
     for(int i=0; i<str.length(); ++i)
         cout<<(char)buf[i];
     cout<<endl;
+
+    // 输出到日志
+    ofstream file = Log::getSaveFileStream();
+    for(int i=0; i<str.length(); ++i)
+        file<<(char)buf[i];
+    file<<"\n";
+    file.close();
 }
 
 main_d::main_d(const sc_module_name &nm) : sc_module(nm) {
